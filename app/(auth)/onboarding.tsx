@@ -6,6 +6,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  useColorScheme,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Animated, { SlideInUp, FadeIn } from "react-native-reanimated";
@@ -15,15 +16,19 @@ import { useRouter } from "expo-router";
 import Button from "@/components/ui/Button";
 import OAuthButton from "@/components/ui/OAuth";
 import { AntDesign } from "@expo/vector-icons";
+import Colors from "@/constants/colors";
 
 const { width } = Dimensions.get("window");
 
 const Onboarding = () => {
+  const scheme = useColorScheme();
   const router = useRouter();
   const handleOAuth = (provider: string) => {
     console.log(`Signing in with ${provider}`);
     // Add your OAuth flow trigger here
   };
+
+  const iconColor = scheme === "dark" ? Colors.muted[900] : Colors.muted[100];
 
   return (
     <KeyboardAvoidingView
@@ -74,7 +79,7 @@ const Onboarding = () => {
               onPress={() => router.push("/(auth)/sign-up")}
               className="mx-6"
               iconRight={
-                <AntDesign name="arrowright" size={24} color="black" />
+                <AntDesign name="arrowright" size={24} color={iconColor} />
               }
             />
 

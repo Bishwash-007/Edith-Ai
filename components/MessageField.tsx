@@ -82,7 +82,7 @@ const MessageField: React.FC<MessageFieldProps> = ({
           {...rest}
         />
 
-        {isEmpty ? (
+        {(Array.isArray(mediaFiles) && mediaFiles.length < 0) && isEmpty ? (
           <TouchableOpacity
             onPress={onCallPress}
             className="p-2 rounded-full dark:bg-muted-800 bg-white"

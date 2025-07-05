@@ -23,6 +23,7 @@ import Avatar from "./ui/Avatar";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const CustomDrawer = () => {
+  const [optionsOpenId, setOptionsOpenId] = useState<string | null>(null);
   const { closeDrawer } = useDrawerStore();
   const colorScheme = useColorScheme();
   const router = useRouter();
@@ -33,7 +34,6 @@ const CustomDrawer = () => {
     transform: [{ translateX: translateX.value }],
   }));
 
-  const [optionsOpenId, setOptionsOpenId] = useState<string | null>(null);
   const chat: ChatItem[] = Array.from({ length: 17 }, (_, i) => ({
     id: i.toString(),
     label: `Chat ${i}`,
