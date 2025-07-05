@@ -7,13 +7,11 @@ import Animated, {
 } from "react-native-reanimated";
 import { useLocalSearchParams, useRouter } from "expo-router";
 
-import Colors from "@/constants/colors";
 import ListHeaderComponent from "@/components/Header";
 import Conversation from "@/components/Conversation";
 import MessageField from "@/components/MessageField";
 import { useDrawerStore } from "@/hooks/useDrawerStore";
 import { useMediaManager } from "@/hooks/useMediaManager";
-import { useThemeStore } from "@/hooks/useThemeStore";
 
 const ChatScreen = () => {
   const { id } = useLocalSearchParams();
@@ -69,7 +67,7 @@ const ChatScreen = () => {
       {/* Messages */}
       <Conversation />
 
-      {/* Keyboard avoiding input */}
+      {/* Keyboard avoiding input with reanmiated */}
       <Animated.View style={[animatedStyles]} className="px-4 pb-2">
         <Animated.View entering={FadeInRight.duration(600)}>
           <MessageField

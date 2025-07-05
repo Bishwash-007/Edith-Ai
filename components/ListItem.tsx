@@ -5,13 +5,14 @@ import Animated from "react-native-reanimated";
 import Options from "./ui/Options";
 
 interface ListItemsProps {
+  id?: string;
   label?: string;
   isOptionsOpen?: boolean;
   onOpenOptions?: () => void;
   onCloseOptions?: () => void;
   onDelete?: () => void;
   onRename?: () => void;
-  onPress?: () => void; // 🔥 New: navigation passed in
+  onPress?: () => void;
   renderBackdrop?: () => React.ReactNode;
 }
 

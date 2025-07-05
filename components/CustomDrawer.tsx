@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
-  Text,
   Dimensions,
   Image,
   Pressable,
@@ -16,21 +15,28 @@ import Animated, {
 } from "react-native-reanimated";
 import { BlurView } from "expo-blur";
 import { useDrawerStore } from "@/hooks/useDrawerStore";
-import ChatHistory from "./ChatHistory";
+import ChatHistory, { ChatItem } from "./ChatHistory";
 import Footer from "./Footer";
 import { useRouter } from "expo-router";
+import Avatar from "./ui/Avatar";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const CustomDrawer = () => {
   const { closeDrawer } = useDrawerStore();
-  const colorScheme = useColorScheme(); // "light" or "dark"
-  const translateX = useSharedValue(0);
-
+  const colorScheme = useColorScheme();
   const router = useRouter();
+
+  const translateX = useSharedValue(0);
 
   const animatedDrawerStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],
+  }));
+
+  const [optionsOpenId, setOptionsOpenId] = useState<string | null>(null);
+  const chat: ChatItem[] = Array.from({ length: 17 }, (_, i) => ({
+    id: i.toString(),
+    label: `Chat ${i}`,
   }));
 
   const navigateToProfile = () => {
@@ -38,9 +44,19 @@ const CustomDrawer = () => {
     closeDrawer();
   };
 
+  const routeToSettings = () => {
+    router.push("/settings");
+    closeDrawer();
+  };
+
+  const handleChatSelect = (id: string) => {
+    router.push(`/(root)/chat/${id}`);
+    closeDrawer();
+  };
+
   const handleLogOut = () => {
-    //TODO implement Log out logic
-    console.log("Log out ");
+    // TODO: Implement logout logic
+    console.log("Log out");
   };
 
   return (
@@ -54,7 +70,7 @@ const CustomDrawer = () => {
         />
       </Pressable>
 
-      {/* Drawer */}
+      {/* Drawer Panel */}
       <Animated.View
         entering={SlideInLeft.springify().damping(25).stiffness(100)}
         exiting={SlideOutLeft.delay(200)
@@ -74,24 +90,35 @@ const CustomDrawer = () => {
         ]}
         className="bg-white dark:bg-black"
       >
-        {/* Profile */}
+        {/* chat logo  */}
         <View className="items-center mt-10 mb-6">
-          <Image
-            source={{
-              uri: "https://img.freepik.com/premium-vector/generate-ai-artificial-intelligence-logo-ai-logo-concept_268834-2200.jpg",
-            }}
-            style={{ width: 100, height: 100, borderRadius: 50 }}
+          <Avatar
+            uri="https://t0.gstatic.com/images?q=tbn:ANd9GcTzEMn9FI59qysZbAAnImz7GVhhx2Z2rd7xdyB5FXSnDh3YtbIa"
+            size={80}
+            onPress={navigateToProfile}
           />
         </View>
 
-        {/* Chat List */}
-        <ChatHistory />
+        <ChatHistory
+          data={chat}
+          optionsOpenId={optionsOpenId}
+          onOpenOptions={(id) => setOptionsOpenId(id)}
+          onCloseOptions={() => setOptionsOpenId(null)}
+          onDelete={(id) => {
+            console.log("Deleted Chat:", id);
+            setOptionsOpenId(null);
+          }}
+          onRename={(id) => {
+            console.log("Renamed Chat:", id);
+            setOptionsOpenId(null);
+          }}
+          onItemPress={handleChatSelect}
+        />
 
-        {/* Footer */}
-        <View className="mt-auto mb-10 px-6">
+        <View className="p-6">
           <Footer
-            onPressAvatar={navigateToProfile}
             onPressLogout={handleLogOut}
+            onPressSettings={routeToSettings}
           />
         </View>
       </Animated.View>

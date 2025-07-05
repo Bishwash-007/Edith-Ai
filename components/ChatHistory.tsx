@@ -1,30 +1,36 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Pressable } from "react-native";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { GestureDetector, Gesture } from "react-native-gesture-handler";
-import { useRouter } from "expo-router";
 import ListItem from "./ListItem";
-import { useDrawerStore } from "@/hooks/useDrawerStore";
 
-const chat = Array.from({ length: 17 }, (_, i) => i);
+export type ChatItem = {
+  id: string;
+  label: string;
+};
 
-const ChatHistory = () => {
-  const { closeDrawer } = useDrawerStore();
-  const router = useRouter();
-  const [optionsOpenId, setOptionsOpenId] = useState<string | null>(null);
+type ChatHistoryProps = {
+  data: ChatItem[];
+  optionsOpenId: string | null;
+  onCloseOptions: () => void;
+  onOpenOptions: (id: string) => void;
+  onDelete: (id: string) => void;
+  onRename: (id: string) => void;
+  onItemPress: (id: string) => void;
+};
 
-  const handleCloseOptions = () => {
-    setOptionsOpenId(null);
-  };
-
-  const handleChatRoute = (id: string) => {
-    router.push(`/(root)/chat/${id}`);
-    closeDrawer();
-  };
-
+const ChatHistory: React.FC<ChatHistoryProps> = ({
+  data,
+  optionsOpenId,
+  onCloseOptions,
+  onOpenOptions,
+  onDelete,
+  onRename,
+  onItemPress,
+}) => {
   const renderBackdrop = () => {
     const tapGesture = Gesture.Tap().onEnd(() => {
-      handleCloseOptions();
+      onCloseOptions();
     });
 
     return (
@@ -38,33 +44,25 @@ const ChatHistory = () => {
     <View className="flex-1 bg-white dark:bg-black">
       <Animated.FlatList
         entering={FadeIn}
-        data={chat}
-        keyExtractor={(item) => item.toString()}
+        data={data}
+        keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
-        onScrollBeginDrag={handleCloseOptions}
+        onScrollBeginDrag={onCloseOptions}
         contentContainerStyle={{ padding: 20 }}
-        renderItem={({ item }) => {
-          const id = item.toString();
-          return (
-            <ListItem
-              label={`Chat ${id}`}
-              isOptionsOpen={optionsOpenId === id}
-              onOpenOptions={() => setOptionsOpenId(id)}
-              onCloseOptions={handleCloseOptions}
-              onDelete={() => {
-                console.log(`Delete Chat ${id}`);
-                handleCloseOptions();
-              }}
-              onRename={() => {
-                console.log(`Rename Chat ${id}`);
-                handleCloseOptions();
-              }}
-              onPress={() => handleChatRoute(id)}
-              renderBackdrop={renderBackdrop}
-            />
-          );
-        }}
+        renderItem={({ item }) => (
+          <ListItem
+            id={item.id}
+            label={item.label}
+            isOptionsOpen={optionsOpenId === item.id}
+            onOpenOptions={() => onOpenOptions(item.id)}
+            onCloseOptions={onCloseOptions}
+            onDelete={() => onDelete(item.id)}
+            onRename={() => onRename(item.id)}
+            onPress={() => onItemPress(item.id)}
+            renderBackdrop={renderBackdrop}
+          />
+        )}
       />
     </View>
   );
