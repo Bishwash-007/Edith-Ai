@@ -17,6 +17,8 @@ import Animated, {
 import { BlurView } from "expo-blur";
 import { useDrawerStore } from "@/hooks/useDrawerStore";
 import ChatHistory from "./ChatHistory";
+import Footer from "./Footer";
+import { useRouter } from "expo-router";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
@@ -25,9 +27,21 @@ const CustomDrawer = () => {
   const colorScheme = useColorScheme(); // "light" or "dark"
   const translateX = useSharedValue(0);
 
+  const router = useRouter();
+
   const animatedDrawerStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],
   }));
+
+  const navigateToProfile = () => {
+    router.push("/profile");
+    closeDrawer();
+  };
+
+  const handleLogOut = () => {
+    //TODO implement Log out logic
+    console.log("Log out ");
+  };
 
   return (
     <>
@@ -75,9 +89,10 @@ const CustomDrawer = () => {
 
         {/* Footer */}
         <View className="mt-auto mb-10 px-6">
-          <Text className="text-xs text-muted-500 dark:text-muted-400 font-poppinsLight">
-            v1.0.0
-          </Text>
+          <Footer
+            onPressAvatar={navigateToProfile}
+            onPressLogout={handleLogOut}
+          />
         </View>
       </Animated.View>
     </>

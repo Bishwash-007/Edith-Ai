@@ -34,7 +34,7 @@ const ListItem: React.FC<ListItemsProps> = ({
           activeOpacity={0.8}
         >
           <Text
-            className="text-lg text-muted-800 dark:text-muted-50 font-poppinsLight"
+            className=" text-muted-800 dark:text-muted-50 font-poppinsLight"
             numberOfLines={1}
           >
             {label}
@@ -53,10 +53,7 @@ const ListItem: React.FC<ListItemsProps> = ({
           {renderBackdrop?.()}
 
           <Animated.View className="absolute right-0 top-full mt-2 z-50">
-            <Options
-              onRename={onRename}
-              onDelete={onDelete}
-            />
+            <Options onRename={onRename} onDelete={onDelete} />
           </Animated.View>
         </>
       )}

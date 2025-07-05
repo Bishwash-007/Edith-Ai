@@ -1,5 +1,5 @@
 import { Redirect } from "expo-router";
 
 export default function Index() {
-  return <Redirect href={`/(root)/chat/${12}`}/>;
+  return <Redirect href={'/(auth)/onboarding'}/>;
 }

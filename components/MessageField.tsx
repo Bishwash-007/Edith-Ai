@@ -7,23 +7,31 @@ import {
   Image,
   useColorScheme,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import Colors from "@/constants/colors";
 
 interface MessageFieldProps extends TextInputProps {
   label?: string;
   placeholder: string;
   mediaFiles?: string[];
+  isEmpty?: boolean;
+  isResponding?: boolean;
   onSendPress?: () => void;
   onAddPress?: () => void;
+  onCallPress?: () => void;
+  onStopPress?: () => void;
   onRemoveMedia?: (index: number) => void;
 }
 
 const MessageField: React.FC<MessageFieldProps> = ({
   placeholder,
+  mediaFiles,
+  isEmpty = true,
+  isResponding = false,
   onSendPress,
   onAddPress,
-  mediaFiles,
+  onCallPress,
+  onStopPress,
   onRemoveMedia,
   ...rest
 }) => {
@@ -74,12 +82,32 @@ const MessageField: React.FC<MessageFieldProps> = ({
           {...rest}
         />
 
-        <TouchableOpacity
-          onPress={onSendPress}
-          className="p-2 rounded-full dark:bg-muted-800 bg-white"
-        >
-          <Ionicons name="send-outline" size={20} color={sendIconColor} />
-        </TouchableOpacity>
+        {isEmpty ? (
+          <TouchableOpacity
+            onPress={onCallPress}
+            className="p-2 rounded-full dark:bg-muted-800 bg-white"
+          >
+            <MaterialIcons
+              name="multitrack-audio"
+              size={20}
+              color={sendIconColor}
+            />
+          </TouchableOpacity>
+        ) : isResponding ? (
+          <TouchableOpacity
+            onPress={onStopPress}
+            className="p-2 rounded-full dark:bg-muted-800 bg-white"
+          >
+            <MaterialIcons name="stop-circle" size={20} color={sendIconColor} />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={onSendPress}
+            className="p-2 rounded-full dark:bg-muted-800 bg-white"
+          >
+            <Ionicons name="send-outline" size={20} color={sendIconColor} />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
