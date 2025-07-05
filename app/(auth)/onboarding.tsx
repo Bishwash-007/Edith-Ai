@@ -1,18 +1,109 @@
-import { View, Text } from "react-native";
 import React from "react";
+import {
+  View,
+  Text,
+  Dimensions,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+import { StatusBar } from "expo-status-bar";
+import Animated, { SlideInUp, FadeIn } from "react-native-reanimated";
+import LottieView from "lottie-react-native";
 import { Link } from "expo-router";
 
-const onboarding = () => {
+import Button from "@/components/ui/Button";
+import OAuthButton from "@/components/ui/OAuth";
+
+const { width } = Dimensions.get("window");
+
+const Onboarding = () => {
+  const handleOAuth = (provider: string) => {
+    console.log(`Signing in with ${provider}`);
+    // Add your OAuth flow trigger here
+  };
+
   return (
-    <View className="h-full items-center justify-center flex flex-1 gap-6">
-      <Link href={`/(auth)/sign-in`} asChild>
-        <Text>SignIn</Text>
-      </Link>
-      <Link href={`/(auth)/sign-up`} asChild>
-        <Text>SignUp</Text>
-      </Link>
-    </View>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+    >
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: "center",
+          paddingHorizontal: 24,
+          backgroundColor: "white",
+        }}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+        <View className="flex-1 items-center justify-center bg-white dark:bg-black">
+          <StatusBar style="auto" />
+
+          {/* Animation Entrance */}
+          <Animated.View
+            entering={SlideInUp.springify().damping(15)}
+            className="items-center"
+          >
+            <LottieView
+              source={require("@/assets/animations/Animation - 1751714621617.json")}
+              autoPlay
+              loop
+              style={{ width: width * 0.6, height: width * 0.6 }}
+            />
+          </Animated.View>
+
+          {/* Welcome Text */}
+          <Animated.View entering={FadeIn.delay(600)} className="mt-6 mb-8">
+            <Text className="text-3xl font-bold text-black dark:text-white text-center">
+              Welcome to the Edith
+            </Text>
+          </Animated.View>
+
+          {/* Buttons Container */}
+          <Animated.View
+            entering={FadeIn.delay(800).duration(400)}
+            className="w-full space-y-4"
+          >
+            {/* Sign In / Sign Up Buttons */}
+            <Link href="/(auth)/sign-in" asChild>
+              <Button title="Sign In" />
+            </Link>
+            <Link href="/(auth)/sign-up" asChild>
+              <Button title="Sign Up" />
+            </Link>
+
+            {/* Separator */}
+            <View className="flex-row items-center justify-center my-6 gap-3">
+              <View className="flex-1 h-[1px] bg-muted-300 dark:bg-muted-700" />
+              <Text className="text-sm text-muted-500 dark:text-muted-400 font-poppinsLight">
+                or
+              </Text>
+              <View className="flex-1 h-[1px] bg-muted-300 dark:bg-muted-700" />
+            </View>
+
+            {/* OAuth Buttons Row */}
+            <View className="flex-row justify-center gap-4">
+              <OAuthButton
+                iconName="google"
+                onPress={() => handleOAuth("google")}
+              />
+              <OAuthButton
+                iconName="github"
+                onPress={() => handleOAuth("github")}
+              />
+              <OAuthButton
+                iconName="facebook"
+                onPress={() => handleOAuth("facebook")}
+              />
+            </View>
+          </Animated.View>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
-export default onboarding;
+export default Onboarding;

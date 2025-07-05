@@ -25,7 +25,7 @@ const InputField: React.FC<Props> = ({
   return (
     <View className="flex mb-4">
       {label && (
-        <Text className="ml-2 font-poppinsSemibold text-lg text-muted-light dark:text-muted-dark mb-1">
+        <Text className="ml-2 font-poppinsSemibold text-md text-muted-800 dark:text-muted-dark mb-1">
           {label}
         </Text>
       )}
