@@ -1,14 +1,15 @@
 import React from "react";
-import { FlatList } from "react-native";
+import { useColorScheme, View } from "react-native";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { ChatMessageProps, sampleMessages } from "@/constants/message";
 import MessageItem from "./MessageItem";
+import { useThemeStore } from "@/hooks/useThemeStore";
+import Colors from "@/constants/colors";
 
 const Conversation = () => {
-  const renderItem = ({ item }: { item: ChatMessageProps }) => {
-    const isUser = item.sender === "user";
-    const isBot = item.sender === "bot";
+  const theme = useColorScheme();
 
+  const renderItem = ({ item }: { item: ChatMessageProps }) => {
     return (
       <MessageItem
         message={item}
@@ -18,12 +19,22 @@ const Conversation = () => {
   };
 
   return (
-    <Animated.FlatList
-      entering={FadeIn}
-      data={sampleMessages}
-      keyExtractor={(item) => item.id}
-      renderItem={renderItem}
-    />
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: theme === "dark" ? Colors.black : Colors.white,
+      }}
+    >
+      <Animated.FlatList
+        scrollEventThrottle={16}
+        entering={FadeIn}
+        data={sampleMessages}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+        contentContainerStyle={{ padding: 20 }}
+        showsVerticalScrollIndicator={false}
+      />
+    </View>
   );
 };
 

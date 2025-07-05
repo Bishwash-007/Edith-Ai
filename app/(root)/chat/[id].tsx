@@ -1,45 +1,37 @@
-import Conversation from "@/components/Conversation";
-import ListHeaderComponent from "@/components/Header";
-import Message from "@/components/Message";
-import MessageField from "@/components/MessageField";
-import TypewriterText from "@/components/TypewriterText";
-import Colors from "@/constants/colors";
-import { sampleMessages } from "@/constants/message";
-import { useDrawerStore } from "@/hooks/useDrawerStore";
-import { useMediaManager } from "@/hooks/useMediaManager";
-import { useThemeStore } from "@/hooks/useThemeStore";
-import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { View } from "react-native";
 import Animated, {
   FadeInRight,
   useAnimatedKeyboard,
   useAnimatedStyle,
 } from "react-native-reanimated";
+import { useLocalSearchParams, useRouter } from "expo-router";
+
+import Colors from "@/constants/colors";
+import ListHeaderComponent from "@/components/Header";
+import Conversation from "@/components/Conversation";
+import MessageField from "@/components/MessageField";
+import { useDrawerStore } from "@/hooks/useDrawerStore";
+import { useMediaManager } from "@/hooks/useMediaManager";
+import { useThemeStore } from "@/hooks/useThemeStore";
 
 const ChatScreen = () => {
   const { id } = useLocalSearchParams();
-  const { theme } = useThemeStore();
   const [message, setMessage] = useState("");
   const router = useRouter();
-  const {
-    mediaFiles,
-    setMediaFiles,
-    handleLibrary,
-    handleCamera,
-    loading,
-    error,
-  } = useMediaManager();
+  const { mediaFiles, setMediaFiles, handleLibrary, loading, error } =
+    useMediaManager();
 
   const keyboard = useAnimatedKeyboard();
   const animatedStyles = useAnimatedStyle(() => ({
     transform: [{ translateY: -keyboard.height.value }],
   }));
+
   useEffect(() => {
     console.log("Chat ID:", id);
   }, [id]);
 
-  const handleAddpress = async () => {
+  const handleAddPress = async () => {
     await handleLibrary();
   };
 
@@ -48,6 +40,7 @@ const ChatScreen = () => {
     setMessage("");
     setMediaFiles([]);
   };
+
   const handleRemoveMedia = (index: number) => {
     setMediaFiles((prev) => prev.filter((_, i) => i !== index));
   };
@@ -57,36 +50,32 @@ const ChatScreen = () => {
   const handleMenuPress = () => {
     toggleDrawer();
   };
+
   const handleCreatePress = () => {
     router.replace(`/(root)/chat/${Math.floor(Math.random() * 100 + 1)}`);
   };
 
   return (
-    <View
-      className="flex-1"
-      style={{
-        backgroundColor: theme === "dark" ? Colors.black : Colors.white,
-      }}
-    >
-      {/* header  */}
-
+    <View className="flex-1 bg-white dark:bg-black">
+      {/* Header */}
       <Animated.View entering={FadeInRight.duration(600)}>
         <ListHeaderComponent
+          title="chatone"
           onMenuPress={handleMenuPress}
           onCreatePress={handleCreatePress}
         />
       </Animated.View>
 
-      {/* Message Screen */}
+      {/* Messages */}
       <Conversation />
 
-      {/* keyboardi avoiding view with reanimated */}
+      {/* Keyboard avoiding input */}
       <Animated.View style={[animatedStyles]} className="px-4 pb-2">
         <Animated.View entering={FadeInRight.duration(600)}>
           <MessageField
             placeholder="Type a message"
             mediaFiles={mediaFiles}
-            onAddPress={handleAddpress}
+            onAddPress={handleAddPress}
             onSendPress={handleSendPress}
             onRemoveMedia={handleRemoveMedia}
             value={message}

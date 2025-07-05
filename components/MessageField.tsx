@@ -5,8 +5,10 @@ import {
   TextInputProps,
   TouchableOpacity,
   Image,
+  useColorScheme,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import Colors from "@/constants/colors";
 
 interface MessageFieldProps extends TextInputProps {
   label?: string;
@@ -25,8 +27,13 @@ const MessageField: React.FC<MessageFieldProps> = ({
   onRemoveMedia,
   ...rest
 }) => {
+  const scheme = useColorScheme();
+
+  const iconColor = scheme === "dark" ? Colors.muted[400] : Colors.muted[600];
+  const sendIconColor = iconColor;
+
   return (
-    <View className="w-full px-2 py-2 bg-white dark:bg-muted-900 rounded-2xl border-hairline border-muted-900 dark:border-muted-200">
+    <View className="w-full px-2 py-2 bg-white dark:bg-muted-900 rounded-2xl border-hairline border-muted-900 dark:border-muted-50">
       {/* Media preview */}
       {Array.isArray(mediaFiles) && mediaFiles.length > 0 && (
         <View className="flex-row flex-wrap gap-2 mb-2">
@@ -45,7 +52,7 @@ const MessageField: React.FC<MessageFieldProps> = ({
                   className="absolute top-0.5 right-0.5 bg-black/70 rounded-full p-0.5 z-10"
                   onPress={() => onRemoveMedia(index)}
                 >
-                  <Ionicons name="close" size={12} color="white" />
+                  <Ionicons name="close" size={10} color="white" />
                 </TouchableOpacity>
               )}
             </View>
@@ -54,16 +61,13 @@ const MessageField: React.FC<MessageFieldProps> = ({
       )}
 
       {/* Message input + buttons */}
-      <View className="flex-row items-center rounded-xl px-3 py-2 gap-2">
-        {(!mediaFiles || mediaFiles.length === 0) && (
-          <TouchableOpacity className="p-1 rounded-md" onPress={onAddPress}>
-            <Ionicons name="add-outline" size={22} color="#737373" />
-          </TouchableOpacity>
-        )}
+      <View className="flex-row items-center rounded-xl px-3 gap-2">
+        <TouchableOpacity className="p-1 rounded-md" onPress={onAddPress}>
+          <Ionicons name="images-outline" size={20} color={iconColor} />
+        </TouchableOpacity>
 
         <TextInput
           placeholder={placeholder}
-          placeholderTextColor="#a3a3a3"
           className="flex-1 text-sm text-black dark:text-white font-poppins text-start"
           multiline
           numberOfLines={4}
@@ -74,7 +78,7 @@ const MessageField: React.FC<MessageFieldProps> = ({
           onPress={onSendPress}
           className="p-2 rounded-full dark:bg-muted-800 bg-white"
         >
-          <Ionicons name="send-outline" size={20} color="#525252" />
+          <Ionicons name="send-outline" size={20} color={sendIconColor} />
         </TouchableOpacity>
       </View>
     </View>

@@ -23,27 +23,24 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
   style,
 }) => {
   const [displayedText, setDisplayedText] = useState("");
-  const opacity = useSharedValue(1);
+  const opacity = useSharedValue(0);
 
   useEffect(() => {
     let currentIndex = 0;
     setDisplayedText("");
     opacity.value = 0;
 
-    const interval = setInterval(
-      () => {
-        currentIndex++;
-        setDisplayedText(text.slice(0, currentIndex));
-        if (currentIndex >= text.length) {
-          clearInterval(interval);
-          opacity.value = withTiming(1, {
-            duration: fadeDuration,
-            easing: Easing.out(Easing.ease),
-          });
-        }
-      },
-      duration / Math.max(text.length, 1)
-    );
+    const interval = setInterval(() => {
+      currentIndex++;
+      setDisplayedText(text.slice(0, currentIndex));
+      if (currentIndex >= text.length) {
+        clearInterval(interval);
+        opacity.value = withTiming(1, {
+          duration: fadeDuration,
+          easing: Easing.out(Easing.ease),
+        });
+      }
+    }, duration / Math.max(text.length, 1));
 
     return () => {
       clearInterval(interval);
@@ -55,9 +52,7 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({
     opacity: opacity.value,
   }));
 
-  return (
-    <AnimatedText style={[style, animatedStyle]}>{displayedText}</AnimatedText>
-  );
+  return <AnimatedText style={[style, animatedStyle]}>{displayedText}</AnimatedText>;
 };
 
 export default TypewriterText;

@@ -5,11 +5,11 @@ import {
   View,
   Image,
   Text,
+  useColorScheme,
 } from "react-native";
-import { useEffect, useRef, useState } from "react";
 import TypewriterText from "./TypewriterText";
-import { ChatMessageProps } from "@/constants/message"; // Adjust this import if needed
-import { useCustomFonts } from "@/hooks/useCustomFonts";
+import { ChatMessageProps } from "@/constants/message";
+import Colors from "@/constants/colors";
 
 type MessageItemProps = {
   message: ChatMessageProps;
@@ -21,16 +21,28 @@ const MessageItem: React.FC<MessageItemProps> = ({ message, onLongPress }) => {
   const isBot = sender === "bot";
   const isUser = sender === "user";
 
+  const theme = useColorScheme();
+
   return (
     <Pressable onLongPress={onLongPress} className="flex mb-6">
       <View
-        className={`rounded-lg p-2 px-4 max-w-[80%] ${
+        className={`rounded-lg p-2 px-4 ${
           isBot
-            ? "self-start bg-muted-50 dark:bg-muted-900"
-            : "self-end bg-white dark:bg-muted-900"
+            ? "self-start bg-white dark:bg-black"
+            : "self-end bg-muted-50 dark:bg-muted-900 max-w-[80%]"
         }`}
       >
-        {text && <TypewriterText text={text} />}
+        {text && (
+          <TypewriterText
+            text={text}
+            duration={1500} // total duration of typing animation
+            fadeDuration={500} // fade-in duration after typing completes
+            style={{
+              fontFamily: "PoppinsLight",
+              color: theme === "dark" ? Colors.muted[50] : Colors.muted[900],
+            }}
+          />
+        )}
 
         {image && (
           <Image
@@ -43,9 +55,9 @@ const MessageItem: React.FC<MessageItemProps> = ({ message, onLongPress }) => {
         {audio && (
           <Pressable
             onPress={() => console.log("play audio")}
-            className="mt-2 p-2 rounded-md bg-muted-200 dark:bg-muted-800"
+            className="mt-2 p-2 rounded-md bg-muted-200 dark:bg-muted-700"
           >
-            <Text className="text-muted-light dark:text-muted-dark font-poppins">
+            <Text className="text-muted-600 dark:text-muted-400 font-poppins">
               ▶️ Play Audio
             </Text>
           </Pressable>

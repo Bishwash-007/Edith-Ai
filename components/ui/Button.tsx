@@ -1,10 +1,16 @@
 import React from "react";
-import { Text, TouchableOpacity, TouchableOpacityProps } from "react-native";
+import {
+  Text,
+  TouchableOpacity,
+  TouchableOpacityProps,
+  View,
+} from "react-native";
 
 export type ButtonProps = TouchableOpacityProps & {
   title: string;
   className?: string;
-  icon?: React.ReactNode; // Optional icon on the left side
+  iconLeft?: React.ReactNode;
+  iconRight?: React.ReactNode;
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -13,7 +19,8 @@ const Button: React.FC<ButtonProps> = ({
   style,
   onPress,
   activeOpacity = 0.8,
-  icon,
+  iconLeft,
+  iconRight,
   ...props
 }) => {
   return (
@@ -21,7 +28,7 @@ const Button: React.FC<ButtonProps> = ({
       onPress={onPress}
       activeOpacity={activeOpacity}
       style={style}
-      className={`flex-row items-center justify-center gap-2
+      className={`flex-row flex-1 justify-center gap-2
         bg-muted-900 dark:bg-muted-200
         border border-muted-300 dark:border-muted-700
         rounded-xl px-4 py-4
@@ -29,10 +36,11 @@ const Button: React.FC<ButtonProps> = ({
       `}
       {...props}
     >
-      {icon && <>{icon}</>}
+      {iconLeft && <View className="self-start">{iconLeft}</View>}
       <Text className="text-center text-base font-poppinsSemibold text-white dark:text-black">
         {title}
       </Text>
+      {iconRight && <View className="self-end">{iconRight}</View>}
     </TouchableOpacity>
   );
 };

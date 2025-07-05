@@ -6,6 +6,7 @@ import {
   Image,
   Pressable,
   StyleSheet,
+  useColorScheme,
 } from "react-native";
 import Animated, {
   SlideInLeft,
@@ -15,14 +16,15 @@ import Animated, {
 } from "react-native-reanimated";
 import { BlurView } from "expo-blur";
 import { useDrawerStore } from "@/hooks/useDrawerStore";
+import ChatHistory from "./ChatHistory";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 const CustomDrawer = () => {
   const { closeDrawer } = useDrawerStore();
+  const colorScheme = useColorScheme(); // "light" or "dark"
   const translateX = useSharedValue(0);
 
-  // Apply translation from gesture
   const animatedDrawerStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],
   }));
@@ -31,10 +33,14 @@ const CustomDrawer = () => {
     <>
       {/* Backdrop */}
       <Pressable onPress={closeDrawer} style={StyleSheet.absoluteFillObject}>
-        <BlurView intensity={40} tint="dark" style={StyleSheet.absoluteFill} />
+        <BlurView
+          intensity={40}
+          tint={colorScheme === "dark" ? "dark" : "light"}
+          style={StyleSheet.absoluteFill}
+        />
       </Pressable>
 
-      {/* Swipeable Drawer */}
+      {/* Drawer */}
       <Animated.View
         entering={SlideInLeft.springify().damping(25).stiffness(100)}
         exiting={SlideOutLeft.delay(200)
@@ -48,13 +54,14 @@ const CustomDrawer = () => {
             left: 0,
             height: "100%",
             width: SCREEN_WIDTH * 0.75,
-            backgroundColor: "#fff",
             zIndex: 50,
           },
           animatedDrawerStyle,
         ]}
+        className="bg-white dark:bg-black"
       >
-        <View className="items-center mb-6 mt-10">
+        {/* Profile */}
+        <View className="items-center mt-10 mb-6">
           <Image
             source={{
               uri: "https://img.freepik.com/premium-vector/generate-ai-artificial-intelligence-logo-ai-logo-concept_268834-2200.jpg",
@@ -63,8 +70,14 @@ const CustomDrawer = () => {
           />
         </View>
 
+        {/* Chat List */}
+        <ChatHistory />
+
+        {/* Footer */}
         <View className="mt-auto mb-10 px-6">
-          <Text className="text-xs text-muted-500">v1.0.0</Text>
+          <Text className="text-xs text-muted-500 dark:text-muted-400 font-poppinsLight">
+            v1.0.0
+          </Text>
         </View>
       </Animated.View>
     </>

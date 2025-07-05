@@ -10,14 +10,16 @@ import {
 import { StatusBar } from "expo-status-bar";
 import Animated, { SlideInUp, FadeIn } from "react-native-reanimated";
 import LottieView from "lottie-react-native";
-import { Link } from "expo-router";
+import { useRouter } from "expo-router";
 
 import Button from "@/components/ui/Button";
 import OAuthButton from "@/components/ui/OAuth";
+import { AntDesign } from "@expo/vector-icons";
 
 const { width } = Dimensions.get("window");
 
 const Onboarding = () => {
+  const router = useRouter();
   const handleOAuth = (provider: string) => {
     console.log(`Signing in with ${provider}`);
     // Add your OAuth flow trigger here
@@ -33,7 +35,6 @@ const Onboarding = () => {
         contentContainerStyle={{
           flexGrow: 1,
           justifyContent: "center",
-          paddingHorizontal: 24,
           backgroundColor: "white",
         }}
         keyboardShouldPersistTaps="handled"
@@ -68,12 +69,14 @@ const Onboarding = () => {
             className="w-full space-y-4"
           >
             {/* Sign In / Sign Up Buttons */}
-            <Link href="/(auth)/sign-in" asChild>
-              <Button title="Sign In" />
-            </Link>
-            <Link href="/(auth)/sign-up" asChild>
-              <Button title="Sign Up" />
-            </Link>
+            <Button
+              title="Get Started"
+              onPress={() => router.push("/(auth)/sign-up")}
+              className="mx-6"
+              iconRight={
+                <AntDesign name="arrowright" size={24} color="black" />
+              }
+            />
 
             {/* Separator */}
             <View className="flex-row items-center justify-center my-6 gap-3">
