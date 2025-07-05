@@ -4,16 +4,3 @@ export interface TabBarIconProps {
   size?: number;
   focused?: boolean;
 }
-
-export interface ProfileViewProps {
-  imageUrl?: string;
-  firstName?: string;
-  lastName?: string;
-  username?: string;
-  bio?: string;
-  followersCount?: number;
-  followingCount?: number;
-  websiteUrl?: string;
-  isCurrentUser?: boolean;
-  userId?: string;
-}

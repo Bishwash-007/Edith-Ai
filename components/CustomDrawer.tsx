@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   View,
   Dimensions,
-  Image,
   Pressable,
   StyleSheet,
   useColorScheme,

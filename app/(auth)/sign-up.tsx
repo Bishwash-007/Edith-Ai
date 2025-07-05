@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  Keyboard,
   TouchableWithoutFeedback,
   ScrollView,
 } from "react-native";
