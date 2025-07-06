@@ -5,37 +5,35 @@ import Colors from "@/constants/colors";
 
 type SettingsListItemProps = {
   label: string;
+  icon?: React.ReactNode;
   onPress?: () => void;
 };
 
 const SettingsListItem: React.FC<SettingsListItemProps> = ({
   label,
+  icon,
   onPress,
 }) => {
   const scheme = useColorScheme();
+  const textColor = scheme === "light" ? Colors.black : Colors.white;
+
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.7}
-      className="w-full px-6 py-3 relative z-0"
+      className="w-full px-6 py-4"
     >
-      <View className="flex-row justify-between items-center z-10">
-        <Text
-          className="text-muted-800 dark:text-muted-50 font-poppinsLight text-sm"
-          numberOfLines={1}
-        >
-          {label}
-        </Text>
-
-        <View>
-          <AntDesign
-            name="right"
-            size={16}
-            color="#000"
-            style={{ color: scheme === "light" ? Colors.black : Colors.white }}
-            className="dark:text-muted-50"
-          />
+      <View className="flex-row justify-between items-center">
+        <View className="flex-row items-center space-x-3 gap-6">
+          {icon}
+          <Text
+            className="font-poppinsLight text-sm dark:text-muted-50 text-muted-800"
+            numberOfLines={1}
+          >
+            {label}
+          </Text>
         </View>
+        <AntDesign name="right" size={16} color={textColor} />
       </View>
     </TouchableOpacity>
   );

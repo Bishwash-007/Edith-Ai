@@ -4,7 +4,6 @@ import {
   GestureResponderEvent,
   View,
   Image,
-  Text,
   useColorScheme,
 } from "react-native";
 import TypewriterText from "./TypewriterText";

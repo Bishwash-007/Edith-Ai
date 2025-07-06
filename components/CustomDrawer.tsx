@@ -5,6 +5,7 @@ import {
   Pressable,
   StyleSheet,
   useColorScheme,
+  Image,
 } from "react-native";
 import Animated, {
   SlideInLeft,
@@ -90,13 +91,6 @@ const CustomDrawer = () => {
         className="bg-white dark:bg-black"
       >
         {/* chat logo  */}
-        <View className="items-center mt-10 mb-6">
-          <Avatar
-            uri="https://t0.gstatic.com/images?q=tbn:ANd9GcTzEMn9FI59qysZbAAnImz7GVhhx2Z2rd7xdyB5FXSnDh3YtbIa"
-            size={80}
-            onPress={navigateToProfile}
-          />
-        </View>
 
         <ChatHistory
           data={chat}
@@ -113,13 +107,6 @@ const CustomDrawer = () => {
           }}
           onItemPress={handleChatSelect}
         />
-
-        <View className="p-6">
-          <Footer
-            onPressLogout={handleLogOut}
-            onPressSettings={routeToSettings}
-          />
-        </View>
       </Animated.View>
     </>
   );

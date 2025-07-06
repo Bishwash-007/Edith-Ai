@@ -27,6 +27,14 @@ const MainLayout = () => {
             }}
           />
           <Stack.Screen
+            name="callscreen"
+            options={{
+              headerShown: true,
+              headerBackButtonMenuEnabled: true,
+              title: "Call Screen",
+            }}
+          />
+          <Stack.Screen
             name="profile"
             options={{
               headerShown: false,

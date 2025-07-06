@@ -1,6 +1,6 @@
 import React from "react";
 import { View, TouchableOpacity, useColorScheme } from "react-native";
-import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import Colors from "@/constants/colors";
 
 type IconsRowProps = {
@@ -26,7 +26,7 @@ const IconsRow: React.FC<IconsRowProps> = ({
       </TouchableOpacity>
 
       <TouchableOpacity onPress={onLike} className="p-1">
-        <AntDesign name="sound" size={16} color="black" />
+        <AntDesign name="sound" size={16} color={iconColor} />
       </TouchableOpacity>
 
       <TouchableOpacity onPress={onLike} className="p-1">

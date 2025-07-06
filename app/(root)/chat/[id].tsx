@@ -6,12 +6,11 @@ import Animated, {
   useAnimatedStyle,
 } from "react-native-reanimated";
 import { useLocalSearchParams, useRouter } from "expo-router";
-
-import ListHeaderComponent from "@/components/Header";
-import Conversation from "@/components/Conversation";
-import MessageField from "@/components/MessageField";
 import { useDrawerStore } from "@/hooks/useDrawerStore";
 import { useMediaManager } from "@/hooks/useMediaManager";
+import MessageField from "@/components/chat/MessageField";
+import Conversation from "@/components/chat/Conversation";
+import ListHeaderComponent from "@/components/chat/Header";
 
 const ChatScreen = () => {
   const { id } = useLocalSearchParams();

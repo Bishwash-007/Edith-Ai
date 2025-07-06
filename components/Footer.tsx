@@ -1,7 +1,6 @@
 import React from "react";
 import { View, TouchableOpacity, useColorScheme } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import Avatar from "./ui/Avatar";
 import Colors from "@/constants/colors";
 
 type FooterProps = {

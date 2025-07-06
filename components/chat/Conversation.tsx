@@ -3,7 +3,6 @@ import { useColorScheme, View } from "react-native";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { ChatMessageProps, sampleMessages } from "@/constants/message";
 import MessageItem from "./MessageItem";
-import { useThemeStore } from "@/hooks/useThemeStore";
 import Colors from "@/constants/colors";
 
 const Conversation = () => {

@@ -2,7 +2,7 @@ import React from "react";
 import { View, Image, ViewStyle, TouchableOpacity } from "react-native";
 
 interface AvatarProps {
-  uri: string;
+  imageSource: string;
   size?: number;
   style?: ViewStyle;
   className?: string;
@@ -10,7 +10,7 @@ interface AvatarProps {
 }
 
 const Avatar: React.FC<AvatarProps> = ({
-  uri,
+  imageSource,
   size = 48,
   style,
   onPress,
@@ -23,7 +23,7 @@ const Avatar: React.FC<AvatarProps> = ({
     >
       <TouchableOpacity onPress={onPress}>
         <Image
-          source={{ uri }}
+          source={{ uri: imageSource }}
           resizeMode="cover"
           style={{ width: size, height: size }}
           className="rounded-full"

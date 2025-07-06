@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
 import React, { useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, useColorScheme, View } from "react-native";
 import Animated, {
   FadeIn,
   useAnimatedKeyboard,
@@ -11,11 +11,14 @@ import Animated, {
 import Button from "@/components/ui/Button";
 import InputField from "@/components/ui/InputField";
 import OAuthButton from "@/components/ui/OAuth";
+import Colors from "@/constants/colors";
 
 const SignIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const scheme = useColorScheme();
 
   const router = useRouter();
   const keyboard = useAnimatedKeyboard();
@@ -61,6 +64,9 @@ const SignIn = () => {
             <InputField
               label="Username"
               placeholder="yourname"
+              placeholderTextColor={
+                scheme === "dark" ? Colors.muted[400] : Colors.muted[600]
+              }
               value={username}
               onChangeText={setUsername}
               iconLeft={
@@ -71,6 +77,9 @@ const SignIn = () => {
             <InputField
               label="Password"
               placeholder="Your password"
+              placeholderTextColor={
+                scheme === "dark" ? Colors.muted[400] : Colors.muted[600]
+              }
               secureTextEntry={!showPassword}
               value={password}
               onChangeText={setPassword}
