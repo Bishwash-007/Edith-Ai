@@ -1,24 +1,49 @@
-import { View } from "react-native";
 import React from "react";
+import { useColorScheme, View } from "react-native";
 import { Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useDrawerStore } from "@/hooks/useDrawerStore";
 import CustomDrawer from "@/components/CustomDrawer";
+import Colors from "@/constants/colors";
 
 const MainLayout = () => {
   const { isOpen } = useDrawerStore();
+  const scheme = useColorScheme();
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView
+      style={{
+        flex: 1,
+        backgroundColor: scheme === "dark" ? Colors.black : Colors.white,
+      }}
+    >
       <View style={{ flex: 1 }}>
-        {/* Stack must only contain Stack.Screens */}
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="chat/[id]" />
-          <Stack.Screen name="profile" />
-          <Stack.Screen name="settings" />
+        {/* Stack contains all screen routes */}
+        <Stack>
+          <Stack.Screen
+            name="chat/[id]"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="profile"
+            options={{
+              headerShown: false,
+              title: "Profile",
+            }}
+          />
+          <Stack.Screen
+            name="settings"
+            options={{
+              headerShown: true,
+              headerBackButtonMenuEnabled: true,
+              title: "Settings",
+            }}
+          />
         </Stack>
 
-        {/* Put CustomDrawer OUTSIDE Stack */}
+        {/* Drawer rendered on top of Stack screens */}
         {isOpen && <CustomDrawer />}
       </View>
     </GestureHandlerRootView>
