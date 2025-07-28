@@ -1,50 +1,74 @@
-# Welcome to your Expo app 👋
+# **Edith AI**
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is the basic frontend for the typical GPTs Like Chatgpt,Perplexity,Grok and so on
 
-## Get started
 
-1. Install dependencies
+## Screenshots
 
-   ```bash
-   npm install
-   ```
+<div align="center">
+   <img src="" alt="Supposed to be the UI of the App.. soon">
+</div>
 
-2. Start the app
 
-   ```bash
-   npx expo start
-   ```
+## Features
 
-In the output, you'll find options to open the app in a
+- Chat with AI
+- FileUpload
+- Cross platform
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Tech Stack
 
-## Get a fresh project
+**Client:** React-Native, React, Expo, Nativewind, Zustand
 
-When you're ready, run:
+**Server:** **
 
-```bash
-npm run reset-project
+
+## Run Locally
+
+Clone the project
+
+```zsh
+  git clone https://www.github.com/bishwash-007/edith-ai
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Go to the project directory
 
-## Learn more
+```zsh
+  cd edith-ai
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+Install dependencies
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```zsh
+  npm install
+```
 
-## Join the community
+Start the server
 
-Join our community of developers creating universal apps.
+```zsh
+  npm run start
+   #or
+  npx expo start
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+```env
+OPENAI_API_KEY=
+```
+
+
+## Authors
+
+- [@bishwash-007](https://www.github.com/bishwash-007)
+
+
+## Feedback
+
+If you have any feedback, please reach out to me at cyborgnotpsycho@gmail.com
+
+
